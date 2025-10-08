@@ -14,9 +14,20 @@
 */
 void test_validate_my_username()
 {
-    /**
-     * TODO: Replace the line below with your code here as described above to verify your /conf/username.txt 
-     * config file and my_username() functions are setup properly
-     */
-    TEST_ASSERT_TRUE_MESSAGE(false,"AESD students, please fix me!");
+    FILE *file;
+    char username_from_file[100]; // Giả sử tên người dùng không quá 100 ký tự
+
+    // Mở file để đọc
+    file = fopen("conf/username.txt", "r");
+    TEST_ASSERT_NOT_NULL_MESSAGE(file, "Could not open username.txt");
+
+    // Đọc tên người dùng từ file
+    fgets(username_from_file, sizeof(username_from_file), file);
+    fclose(file);
+
+    // Xóa ký tự newline nếu có
+    username_from_file[strcspn(username_from_file, "\n")] = 0;
+
+    // So sánh tên người dùng từ file với tên người dùng từ hàm
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(username_from_file, "tuanhuu309", "Usernames do not match!");
 }
